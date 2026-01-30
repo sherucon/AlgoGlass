@@ -28,7 +28,7 @@ function App() {
       {/* Center: Grid (60% approx) */}
       <main className="flex-[3] flex flex-col justify-center items-center relative min-w-0 bg-gray-200/50 rounded-2xl border-2 border-dashed border-gray-300">
         <h1 className="absolute top-4 left-6 text-2xl font-black tracking-tight text-gray-400 select-none">
-          AlgoGlass <span className="text-blue-500 text-xs align-top">BETA</span>
+          AlgoGlass <span className="text-blue-500 text-xs align-baseline">team pr0ud</span>
         </h1>
         <div className="z-10 overflow-auto max-w-full max-h-full p-8 shadow-inner rounded-xl">
             <Grid />
