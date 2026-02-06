@@ -30,6 +30,20 @@ function App() {
         <h1 className="absolute top-4 left-6 text-2xl font-black tracking-tight text-gray-400 select-none">
           AlgoGlass <span className="text-blue-500 text-xs align-baseline">team pr0ud</span>
         </h1>
+        <div className="absolute top-14 left-6 text-sm font-medium text-gray-400 pointer-events-none select-none space-y-1">
+          <p className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+            Draw walls by dragging over empty cells
+          </p>
+          <p className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+            Click Start node to move it
+          </p>
+          <p className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+            Click Target node to move it
+          </p>
+        </div>
         <div className="z-10 overflow-auto max-w-full max-h-full p-8 shadow-inner rounded-xl">
             <Grid />
         </div>

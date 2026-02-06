@@ -9,11 +9,14 @@ const Grid = () => {
     currentSnapshotIndex, 
     initializeGrid, 
     toggleWall,
+    setStartNode,
+    setTargetNode,
     isPlaying,
     isFinished
   } = useGameStore();
 
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [activeSelection, setActiveSelection] = useState<'start' | 'end' | null>(null);
 
   useEffect(() => {
     initializeGrid();
@@ -35,12 +38,51 @@ const Grid = () => {
 
   const handleMouseDown = (row: number, col: number) => {
     if (showSnapshot) return;
+
+    const cell = currentGrid[row][col];
+
+    // If we are currently in "moving start node" mode
+    if (activeSelection === 'start') {
+      // Prevent placing start node on top of end node
+      if (cell.type !== 'target') {
+        setStartNode(row, col);
+        setActiveSelection(null); // Exit selection mode
+      }
+      return;
+    }
+
+    // If we are currently in "moving end node" mode
+    if (activeSelection === 'end') {
+      // Prevent placing end node on top of start node
+      if (cell.type !== 'start') {
+        setTargetNode(row, col);
+        setActiveSelection(null); // Exit selection mode
+      }
+      return;
+    }
+
+    // Check if clicking existing Start/End nodes to enter selection mode
+    if (cell.type === 'start') {
+      setActiveSelection('start');
+      return;
+    }
+    
+    if (cell.type === 'target') {
+      setActiveSelection('end');
+      return;
+    }
+
+    // Default behavior: Wall drawing
     setIsMouseDown(true);
     toggleWall(row, col);
   };
 
   const handleMouseEnter = (row: number, col: number) => {
     if (showSnapshot) return;
+    
+    // Disable dragging walls if we are in the middle of moving a Start/End node
+    if (activeSelection) return;
+
     if (isMouseDown) {
       toggleWall(row, col);
     }
@@ -52,7 +94,7 @@ const Grid = () => {
 
   return (
     <div 
-      className="inline-grid gap-px select-none bg-gray-300 border-4 border-gray-800 shadow-2xl rounded-lg overflow-hidden"
+      className={`inline-grid gap-px select-none bg-gray-300 border-4 border-gray-800 shadow-2xl rounded-lg overflow-hidden ${activeSelection ? 'cursor-crosshair' : ''}`}
       style={{
         gridTemplateColumns: `repeat(${currentGrid[0].length}, 24px)`
       }}
