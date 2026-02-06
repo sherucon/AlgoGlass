@@ -140,6 +140,13 @@ export const dfs = (
         const p = curr.parent;
         curr = grid[p.row][p.col];
     }
+
+    snapshots.push({
+        gridState: cloneGrid(grid),
+        structureState: [],
+        currentNode: null,
+        logMessage: `Path Path Highlighted`
+    });
   }
 
   return snapshots;
